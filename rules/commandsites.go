@@ -34,10 +34,6 @@ type commandSite struct {
 	Command string
 }
 
-// commandSites returns every non-empty command-bearing site in the target, in a
-// stable order: settings.json hooks (by event name), then its credential/runtime
-// helpers, then each MCP server's headersHelper (attributed to the MCP source
-// file). Returns nil for a nil target.
 // claudeHookCommand is a Claude Code command hook's text as one line: the
 // command, followed by its exec-form args (#773). A handler without args is its
 // command unchanged.
@@ -45,6 +41,10 @@ func claudeHookCommand(h parser.HookCommand) string {
 	return strings.TrimSpace(strings.Join(append([]string{h.Command}, h.Args...), " "))
 }
 
+// commandSites returns every non-empty command-bearing site in the target, in a
+// stable order: settings.json hooks (by event name), then its credential/runtime
+// helpers, then each MCP server's headersHelper (attributed to the MCP source
+// file). Returns nil for a nil target.
 func commandSites(t *Target) []commandSite {
 	if t == nil {
 		return nil
